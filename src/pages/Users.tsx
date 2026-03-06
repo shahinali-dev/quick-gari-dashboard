@@ -36,8 +36,8 @@ export default function Users() {
     pages: 1,
   };
 
-  const handleOnViewUser = (userId: string) => {
-    navigate(`/users/${userId}`);
+  const handleOnViewUser = (user: any) => {
+    navigate(`/users/${user._id}`);
   };
   return (
     <div className="flex flex-col gap-6 p-8">

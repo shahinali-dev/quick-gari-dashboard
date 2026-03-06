@@ -6,13 +6,11 @@ import {
   useGetAllCarRegistrationRequest,
 } from "@/hooks";
 import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function CarRegistrationDetail() {
   const { requestId } = useParams<{ requestId: string }>();
   const navigate = useNavigate();
-  const [approvingId, setApprovingId] = useState<string | null>(null);
 
   // Fetch all requests and find the one by ID
   const { data } = useGetAllCarRegistrationRequest({
@@ -26,14 +24,9 @@ export default function CarRegistrationDetail() {
 
   const handleApprove = () => {
     if (!carRequest) return;
-    setApprovingId(carRequest._id);
     approveRequest(carRequest._id, {
       onSuccess: () => {
-        setApprovingId(null);
         navigate("/car-registration");
-      },
-      onError: () => {
-        setApprovingId(null);
       },
     });
   };

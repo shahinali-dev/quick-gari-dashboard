@@ -1,3 +1,4 @@
+import { NotificationProvider } from "@/context/NotificationContext";
 import { AuthProvider } from "@/provider/AuthProvider";
 import { QueryProvider } from "@/provider/QueryProvider";
 import { StrictMode } from "react";
@@ -10,7 +11,9 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryProvider>
       <AuthProvider>
-        <RouterProvider router={router} />
+        <NotificationProvider>
+          <RouterProvider router={router} />
+        </NotificationProvider>
       </AuthProvider>
     </QueryProvider>
   </StrictMode>,

@@ -98,6 +98,30 @@ export default function CarRegistrationFilters({
           )}
         </div>
 
+        {/* Status Filter */}
+        <Select
+          value={
+            params.isApproved !== undefined
+              ? params.isApproved.toString()
+              : "all"
+          }
+          onValueChange={(value) => {
+            if (value === "all") handleFilterChange(null);
+            else if (value === "true") handleFilterChange(true);
+            else handleFilterChange(false);
+          }}
+          disabled={isLoading}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Filter by status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Status</SelectItem>
+            <SelectItem value="true">Approved</SelectItem>
+            <SelectItem value="false">Pending</SelectItem>
+          </SelectContent>
+        </Select>
+
         {/* Sort */}
         <Select
           value={`${params.sortBy || "createdAt"}-${params.sortOrder || "desc"}`}

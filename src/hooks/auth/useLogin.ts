@@ -47,6 +47,7 @@ export function useLogin() {
 
       // Map API response to user format
       const userData = {
+        _id: data.data._id,
         id: data.data._id,
         email: data.data.email,
         name: data.data.name,

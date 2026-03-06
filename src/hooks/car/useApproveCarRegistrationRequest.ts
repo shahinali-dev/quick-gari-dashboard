@@ -9,7 +9,9 @@ export function useApproveCarRegistrationRequest() {
       return response.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries("car-registration-requests");
+      queryClient.invalidateQueries({
+        queryKey: ["car-registration-requests"],
+      });
     },
   });
 }

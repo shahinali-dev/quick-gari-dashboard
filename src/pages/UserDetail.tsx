@@ -1,9 +1,9 @@
-import { useGetUserById } from "@/hooks";
-import { useNavigate, useParams } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useGetUserById } from "@/hooks";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function UserDetail() {
   const { userId } = useParams<{ userId: string }>();
@@ -135,7 +135,9 @@ export default function UserDetail() {
               <p className="text-xs font-semibold text-gray-500 uppercase mb-2">
                 Role
               </p>
-              <Badge className={`${getRoleBadgeColor(userData.role)} text-xs font-semibold`}>
+              <Badge
+                className={`${getRoleBadgeColor(userData.role)} text-xs font-semibold`}
+              >
                 {getRoleLabel(userData.role)}
               </Badge>
             </div>
