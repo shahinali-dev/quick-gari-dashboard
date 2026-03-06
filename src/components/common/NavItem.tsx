@@ -29,11 +29,11 @@ export default function NavItem({ item, collapsed }: NavItemProps) {
       end={item.path === "/"}
       className={({ isActive }) =>
         cn(
-          "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150",
+          "flex items-center rounded-lg text-sm font-medium transition-colors duration-150",
           isActive
             ? "bg-amber-500 text-gray-950"
             : "text-gray-400 hover:bg-gray-800 hover:text-white",
-          collapsed && "justify-center px-2",
+          collapsed ? "w-10 h-10 justify-center" : "gap-3 px-3 py-2 w-full",
         )
       }
     >
@@ -50,7 +50,9 @@ export default function NavItem({ item, collapsed }: NavItemProps) {
   if (collapsed) {
     return (
       <Tooltip>
-        <TooltipTrigger asChild>{link}</TooltipTrigger>
+        <TooltipTrigger asChild className="flex justify-center w-full">
+          {link}
+        </TooltipTrigger>
         <TooltipContent side="right" className="flex items-center gap-2">
           {item.name}
           {item.badge && (

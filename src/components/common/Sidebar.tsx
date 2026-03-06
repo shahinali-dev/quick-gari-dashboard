@@ -52,27 +52,39 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
         )}
       >
         {/* Logo */}
-        <div className="flex items-center h-16 px-4 gap-3 border-b border-gray-800">
-          <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-amber-500 shrink-0">
-            <Car size={18} className="text-gray-950" />
-          </div>
+        <div
+          className={cn(
+            "flex items-center h-16 px-3 gap-3 border-b border-gray-800",
+            collapsed ? "justify-center" : "justify-between",
+          )}
+        >
           {!collapsed && (
-            <span className="text-lg font-bold tracking-tight text-white truncate">
-              Quick Gari
-            </span>
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-amber-500 shrink-0">
+                <Car size={18} className="text-gray-950" />
+              </div>
+              <span className="text-lg font-bold tracking-tight text-white truncate">
+                Quick Gari
+              </span>
+            </div>
           )}
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setCollapsed(!collapsed)}
-            className="ml-auto text-gray-400 hover:text-white hover:bg-gray-800 h-8 w-8 shrink-0"
+            className="text-gray-400 hover:text-white hover:bg-gray-800 h-8 w-8 shrink-0"
           >
             {collapsed ? <ChevronRight size={16} /> : <Menu size={16} />}
           </Button>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-0.5">
+        <nav
+          className={cn(
+            "flex-1 overflow-y-auto py-4 space-y-0.5",
+            collapsed ? "px-0" : "px-2",
+          )}
+        >
           {!collapsed && (
             <p className="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-gray-500">
               Main
