@@ -93,13 +93,6 @@ export function NotificationProvider({
     };
 
     setNotifications((prev) => [newNotification, ...prev].slice(0, 50)); // Keep last 50
-
-    // Auto-remove after 5 seconds if not interacted
-    setTimeout(() => {
-      setNotifications((prev) =>
-        prev.filter((n) => n.id !== newNotification.id),
-      );
-    }, 5000);
   };
 
   const markAsRead = (id: string) => {
