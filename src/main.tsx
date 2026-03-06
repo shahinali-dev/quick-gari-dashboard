@@ -1,3 +1,5 @@
+import { AuthProvider } from "@/provider/AuthProvider";
+import { QueryProvider } from "@/provider/QueryProvider";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
@@ -6,6 +8,10 @@ import router from "./router/Router.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <QueryProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </QueryProvider>
   </StrictMode>,
 );

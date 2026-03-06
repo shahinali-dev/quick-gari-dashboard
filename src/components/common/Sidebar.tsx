@@ -1,4 +1,4 @@
-import type { MenuItem } from "@/components/NavItem";
+import type { MenuItem } from "@/components/common/NavItem";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -23,8 +23,8 @@ import NavItem from "./NavItem";
 
 const mainMenu: MenuItem[] = [
   { name: "Dashboard", icon: LayoutDashboard, path: "/", badge: null },
+  { name: "Users", icon: Users, path: "/users", badge: null },
   { name: "Rides", icon: Car, path: "/rides", badge: "12" },
-  { name: "Drivers", icon: Users, path: "/drivers", badge: null },
   { name: "Earnings", icon: Wallet, path: "/earnings", badge: null },
   { name: "Analytics", icon: BarChart3, path: "/analytics", badge: null },
   { name: "Locations", icon: MapPin, path: "/locations", badge: null },
