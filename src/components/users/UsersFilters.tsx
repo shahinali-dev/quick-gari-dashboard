@@ -7,10 +7,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useDebounce } from "@/hooks";
 import type { GetUsersParams } from "@/hooks";
+import { useDebounce } from "@/hooks";
 import { Search, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface UsersFiltersProps {
   params: GetUsersParams;
@@ -26,18 +26,19 @@ export default function UsersFilters({
   const [searchInput, setSearchInput] = useState(params.search || "");
   const debouncedSearch = useDebounce(searchInput, 500);
 
-  // Update params when debounced search changes
+  // Use ref to always have latest params without adding it as a dependency
+  const paramsRef = useRef(params);
+  paramsRef.current = params;
+
+  // Only runs when debouncedSearch actually changes — no infinite loop
   useEffect(() => {
     onParamsChange({
-      ...params,
+      ...paramsRef.current,
       search: debouncedSearch,
       page: 1,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch]);
-
-  const handleSearchChange = (value: string) => {
-    setSearchInput(value);
-  };
 
   const handleRoleChange = (value: string) => {
     onParamsChange({
@@ -59,32 +60,33 @@ export default function UsersFilters({
 
   const handleClearFilters = () => {
     setSearchInput("");
-    onParamsChange({
-      page: 1,
-      limit: 10,
-    });
+    onParamsChange({ page: 1, limit: params.limit ?? 10 });
   };
 
+  const hasActiveFilters = !!(searchInput || params.role || params.sortBy);
+
   return (
-    <div className="space-y-4 mb-6 p-4 bg-white rounded-lg border border-gray-200">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="mb-6 p-4 bg-white rounded-xl border border-gray-200 shadow-sm">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
         {/* Search */}
         <div className="relative">
-          <Search className="absolute left-3 top-3 text-gray-400" size={18} />
+          <Search
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+            size={16}
+          />
           <Input
             placeholder="Search by name or email..."
-            className="pl-10 pr-10"
+            className="pl-9 pr-9 h-9 text-sm"
             value={searchInput}
-            onChange={(e) => handleSearchChange(e.target.value)}
+            onChange={(e) => setSearchInput(e.target.value)}
             disabled={isLoading}
           />
           {searchInput && (
             <button
-              onClick={() => handleSearchChange("")}
-              className="absolute right-3 top-3 text-gray-400 hover:text-gray-600 transition-colors"
-              title="Clear search"
+              onClick={() => setSearchInput("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
             >
-              <X size={18} />
+              <X size={14} />
             </button>
           )}
         </div>
@@ -95,7 +97,7 @@ export default function UsersFilters({
           onValueChange={handleRoleChange}
           disabled={isLoading}
         >
-          <SelectTrigger>
+          <SelectTrigger className="h-9 text-sm">
             <SelectValue placeholder="Filter by role" />
           </SelectTrigger>
           <SelectContent>
@@ -112,26 +114,26 @@ export default function UsersFilters({
           onValueChange={handleSortChange}
           disabled={isLoading}
         >
-          <SelectTrigger>
+          <SelectTrigger className="h-9 text-sm">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="createdAt-desc">Newest First</SelectItem>
             <SelectItem value="createdAt-asc">Oldest First</SelectItem>
-            <SelectItem value="name-asc">Name (A-Z)</SelectItem>
-            <SelectItem value="name-desc">Name (Z-A)</SelectItem>
+            <SelectItem value="name-asc">Name (A–Z)</SelectItem>
+            <SelectItem value="name-desc">Name (Z–A)</SelectItem>
           </SelectContent>
         </Select>
 
         {/* Clear Filters */}
-        {(searchInput || params.role || params.sortBy) && (
+        {hasActiveFilters && (
           <Button
             variant="outline"
             onClick={handleClearFilters}
             disabled={isLoading}
-            className="gap-2"
+            className="h-9 text-sm gap-2 text-gray-600 hover:text-gray-900"
           >
-            <X size={16} />
+            <X size={14} />
             Clear Filters
           </Button>
         )}

@@ -1,4 +1,4 @@
-import PaginationComponent from "@/components/users/Pagination";
+import PaginationComponent from "@/components/common/Pagination";
 import UsersFilters from "@/components/users/UsersFilters";
 import UsersTable from "@/components/users/UsersTable";
 import type { GetUsersParams } from "@/hooks";
