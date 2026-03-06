@@ -1,10 +1,13 @@
 import { createContext } from "react";
 
 export interface User {
-  id: string;
+  _id: string;
+  id?: string;
   email: string;
   name: string;
-  role: "admin" | "car_owner";
+  role: "admin" | "car_owner" | "user";
+  phoneNumber?: string;
+  isVerified?: boolean;
   avatar?: string;
 }
 

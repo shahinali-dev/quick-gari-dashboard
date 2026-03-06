@@ -9,24 +9,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { User } from "@/hooks/useGetUsers";
-import { Edit2, Eye, Trash2 } from "lucide-react";
+import type { User } from "@/hooks";
+import { Eye } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface UsersTableProps {
   users: User[];
   isLoading?: boolean;
-  onEdit?: (user: User) => void;
-  onDelete?: (userId: string) => void;
   onView?: (user: User) => void;
 }
 
 export default function UsersTable({
   users,
   isLoading = false,
-  onEdit,
-  onDelete,
   onView,
 }: UsersTableProps) {
+  const navigate = useNavigate();
   if (isLoading) {
     return (
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
@@ -136,33 +134,11 @@ export default function UsersTable({
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => onView(user)}
+                      onClick={() => navigate(`/users/${user._id}`)}
                       title="View user details"
                       className="text-gray-600 hover:text-gray-900"
                     >
                       <Eye size={16} />
-                    </Button>
-                  )}
-                  {onEdit && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => onEdit(user)}
-                      title="Edit user"
-                      className="text-blue-600 hover:text-blue-900"
-                    >
-                      <Edit2 size={16} />
-                    </Button>
-                  )}
-                  {onDelete && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => onDelete(user._id)}
-                      title="Delete user"
-                      className="text-red-600 hover:text-red-900"
-                    >
-                      <Trash2 size={16} />
                     </Button>
                   )}
                 </div>

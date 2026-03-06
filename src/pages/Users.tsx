@@ -1,9 +1,10 @@
 import PaginationComponent from "@/components/users/Pagination";
 import UsersFilters from "@/components/users/UsersFilters";
 import UsersTable from "@/components/users/UsersTable";
-import type { GetUsersParams, User } from "@/hooks/useGetUsers";
-import { useGetUsers } from "@/hooks/useGetUsers";
+import type { GetUsersParams } from "@/hooks";
+import { useGetUsers } from "@/hooks";
 import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Users() {
   const [params, setParams] = useState<GetUsersParams>({
@@ -13,6 +14,8 @@ export default function Users() {
 
   const { data, isLoading } = useGetUsers(params);
   console.log("Users data:", data);
+
+  const navigate = useNavigate();
 
   const handleParamsChange = useCallback((newParams: GetUsersParams) => {
     setParams(newParams);
@@ -26,21 +29,6 @@ export default function Users() {
     setParams({ ...params, limit, page: 1 });
   };
 
-  const handleEdit = (user: User) => {
-    console.log("Edit user:", user);
-    // TODO: Implement edit functionality
-  };
-
-  const handleDelete = (userId: string) => {
-    console.log("Delete user:", userId);
-    // TODO: Implement delete functionality
-  };
-
-  const handleView = (user: User) => {
-    console.log("View user:", user);
-    // TODO: Implement view functionality
-  };
-
   const paginationData = data?.meta || {
     page: 1,
     limit: 10,
@@ -48,6 +36,9 @@ export default function Users() {
     pages: 1,
   };
 
+  const handleOnViewUser = (userId: string) => {
+    navigate(`/users/${userId}`);
+  };
   return (
     <div className="flex flex-col gap-6 p-8">
       <div>
@@ -68,9 +59,7 @@ export default function Users() {
       <UsersTable
         users={data?.data || []}
         isLoading={isLoading}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        onView={handleView}
+        onView={handleOnViewUser}
       />
 
       <PaginationComponent

@@ -4,6 +4,7 @@ import Dashboard from "@/pages/Dashboard";
 import Login from "@/pages/Login";
 import Rides from "@/pages/Rides";
 import Users from "@/pages/Users";
+import UserDetail from "@/pages/UserDetail";
 import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/users",
         element: <Users />,
+      },
+      {
+        path: "/users/:userId",
+        element: <UserDetail />,
       },
       {
         path: "/rides",

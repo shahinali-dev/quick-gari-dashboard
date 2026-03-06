@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useAuth } from "@/hooks/auth";
 import { cn } from "@/lib/utils";
 import {
   BarChart3,
@@ -43,6 +44,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
+  const { user, logout } = useAuth();
   return (
     <TooltipProvider delayDuration={0}>
       <aside
@@ -117,14 +119,18 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
             <Avatar className="h-8 w-8 shrink-0">
               <AvatarImage src="https://github.com/shadcn.png" />
               <AvatarFallback className="bg-amber-500 text-gray-950 text-xs font-bold">
-                AD
+                {user?.name
+                  ? user.name.split(" ").map((n) => n[0]).join("").toUpperCase()
+                  : "US"}
               </AvatarFallback>
             </Avatar>
             {!collapsed && (
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white truncate">Admin</p>
+                <p className="text-sm font-medium text-white truncate">
+                  {user?.name || "User"}
+                </p>
                 <p className="text-xs text-gray-400 truncate">
-                  admin@quickgari.com
+                  {user?.email || "user@example.com"}
                 </p>
               </div>
             )}
@@ -132,7 +138,9 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
               <Button
                 variant="ghost"
                 size="icon"
+                onClick={logout}
                 className="h-7 w-7 text-gray-400 hover:text-white hover:bg-gray-800 shrink-0"
+                title="Logout"
               >
                 <LogOut size={14} />
               </Button>

@@ -50,10 +50,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       // Map API response to user format
       const userData: User = {
+        _id: data.data._id,
         id: data.data._id,
         email: data.data.email,
         name: data.data.name,
         role: data.data.role,
+        phoneNumber: data.data.phoneNumber,
+        isVerified: data.data.isVerified,
         avatar: data.data.avatar,
       };
 

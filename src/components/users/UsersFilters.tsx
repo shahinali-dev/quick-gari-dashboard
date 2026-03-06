@@ -7,8 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useDebounce } from "@/hooks/useDebounce";
-import type { GetUsersParams } from "@/hooks/useGetUsers";
+import { useDebounce } from "@/hooks";
+import type { GetUsersParams } from "@/hooks";
 import { Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -73,11 +73,20 @@ export default function UsersFilters({
           <Search className="absolute left-3 top-3 text-gray-400" size={18} />
           <Input
             placeholder="Search by name or email..."
-            className="pl-10"
+            className="pl-10 pr-10"
             value={searchInput}
             onChange={(e) => handleSearchChange(e.target.value)}
             disabled={isLoading}
           />
+          {searchInput && (
+            <button
+              onClick={() => handleSearchChange("")}
+              className="absolute right-3 top-3 text-gray-400 hover:text-gray-600 transition-colors"
+              title="Clear search"
+            >
+              <X size={18} />
+            </button>
+          )}
         </div>
 
         {/* Role Filter */}
