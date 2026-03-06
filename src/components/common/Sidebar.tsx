@@ -1,0 +1,133 @@
+import type { MenuItem } from "@/components/NavItem";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+import {
+  BarChart3,
+  Bell,
+  Car,
+  ChevronRight,
+  HelpCircle,
+  LayoutDashboard,
+  LogOut,
+  MapPin,
+  Menu,
+  Settings,
+  Shield,
+  Users,
+  Wallet,
+} from "lucide-react";
+import NavItem from "./NavItem";
+
+const mainMenu: MenuItem[] = [
+  { name: "Dashboard", icon: LayoutDashboard, path: "/", badge: null },
+  { name: "Rides", icon: Car, path: "/rides", badge: "12" },
+  { name: "Drivers", icon: Users, path: "/drivers", badge: null },
+  { name: "Earnings", icon: Wallet, path: "/earnings", badge: null },
+  { name: "Analytics", icon: BarChart3, path: "/analytics", badge: null },
+  { name: "Locations", icon: MapPin, path: "/locations", badge: null },
+];
+
+const secondaryMenu: MenuItem[] = [
+  { name: "Notifications", icon: Bell, path: "/notifications", badge: "3" },
+  { name: "Security", icon: Shield, path: "/security", badge: null },
+  { name: "Settings", icon: Settings, path: "/settings", badge: null },
+  { name: "Help", icon: HelpCircle, path: "/help", badge: null },
+];
+
+interface SidebarProps {
+  collapsed: boolean;
+  setCollapsed: (val: boolean) => void;
+}
+
+export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
+  return (
+    <TooltipProvider delayDuration={0}>
+      <aside
+        className={cn(
+          "flex flex-col h-screen bg-gray-950 text-gray-100 transition-all duration-300 ease-in-out shrink-0",
+          collapsed ? "w-[68px]" : "w-64",
+        )}
+      >
+        {/* Logo */}
+        <div className="flex items-center h-16 px-4 gap-3 border-b border-gray-800">
+          <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-amber-500 shrink-0">
+            <Car size={18} className="text-gray-950" />
+          </div>
+          {!collapsed && (
+            <span className="text-lg font-bold tracking-tight text-white truncate">
+              Quick Gari
+            </span>
+          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setCollapsed(!collapsed)}
+            className="ml-auto text-gray-400 hover:text-white hover:bg-gray-800 h-8 w-8 shrink-0"
+          >
+            {collapsed ? <ChevronRight size={16} /> : <Menu size={16} />}
+          </Button>
+        </div>
+
+        {/* Navigation */}
+        <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-0.5">
+          {!collapsed && (
+            <p className="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+              Main
+            </p>
+          )}
+          {mainMenu.map((item) => (
+            <NavItem key={item.path} item={item} collapsed={collapsed} />
+          ))}
+
+          <Separator className="my-3 bg-gray-800" />
+
+          {!collapsed && (
+            <p className="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+              System
+            </p>
+          )}
+          {secondaryMenu.map((item) => (
+            <NavItem key={item.path} item={item} collapsed={collapsed} />
+          ))}
+        </nav>
+
+        {/* User */}
+        <div className="border-t border-gray-800 p-3">
+          <div
+            className={cn(
+              "flex items-center gap-3",
+              collapsed && "justify-center",
+            )}
+          >
+            <Avatar className="h-8 w-8 shrink-0">
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback className="bg-amber-500 text-gray-950 text-xs font-bold">
+                AD
+              </AvatarFallback>
+            </Avatar>
+            {!collapsed && (
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-white truncate">Admin</p>
+                <p className="text-xs text-gray-400 truncate">
+                  admin@quickgari.com
+                </p>
+              </div>
+            )}
+            {!collapsed && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7 text-gray-400 hover:text-white hover:bg-gray-800 shrink-0"
+              >
+                <LogOut size={14} />
+              </Button>
+            )}
+          </div>
+        </div>
+      </aside>
+    </TooltipProvider>
+  );
+}

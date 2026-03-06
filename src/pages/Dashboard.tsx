@@ -1,3 +1,5 @@
+import PlaceholderPage from "@/components/dashboard/PlaceHolder";
+
 export default function Dashboard() {
-  return <div>Welcome to Quick Gari Dashboard</div>;
+  return <PlaceholderPage title="Dashboard" />;
 }
