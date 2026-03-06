@@ -1,14 +1,13 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  useGetAllCarRegistrationRequest,
   useApproveCarRegistrationRequest,
-  type CarRegistrationRequest,
+  useGetAllCarRegistrationRequest,
 } from "@/hooks";
+import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function CarRegistrationDetail() {
   const { requestId } = useParams<{ requestId: string }>();

@@ -1,9 +1,9 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetCarById } from "@/hooks";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function CarDetail() {
   const { carId } = useParams<{ carId: string }>();

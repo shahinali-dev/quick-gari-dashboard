@@ -108,9 +108,7 @@ export default function CarRegistrationTable({
         <TableBody>
           {requests.map((request) => (
             <TableRow key={request._id} className="hover:bg-gray-50">
-              <TableCell className="font-medium">
-                {request.carName}
-              </TableCell>
+              <TableCell className="font-medium">{request.carName}</TableCell>
               <TableCell className="text-gray-600">
                 {request.user.name}
               </TableCell>

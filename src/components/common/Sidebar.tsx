@@ -6,19 +6,13 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { useAuth } from "@/hooks/auth";
 import { cn } from "@/lib/utils";
 import {
-  BarChart3,
   Bell,
   Car,
   ChevronRight,
-  HelpCircle,
   LayoutDashboard,
   LogOut,
-  MapPin,
   Menu,
-  Settings,
-  Shield,
   Users,
-  Wallet,
 } from "lucide-react";
 import NavItem from "./NavItem";
 
@@ -37,17 +31,10 @@ const mainMenu: MenuItem[] = [
     path: "/cars",
     badge: null,
   },
-  { name: "Rides", icon: Car, path: "/rides", badge: "12" },
-  { name: "Earnings", icon: Wallet, path: "/earnings", badge: null },
-  { name: "Analytics", icon: BarChart3, path: "/analytics", badge: null },
-  { name: "Locations", icon: MapPin, path: "/locations", badge: null },
 ];
 
 const secondaryMenu: MenuItem[] = [
   { name: "Notifications", icon: Bell, path: "/notifications", badge: "3" },
-  { name: "Security", icon: Shield, path: "/security", badge: null },
-  { name: "Settings", icon: Settings, path: "/settings", badge: null },
-  { name: "Help", icon: HelpCircle, path: "/help", badge: null },
 ];
 
 interface SidebarProps {

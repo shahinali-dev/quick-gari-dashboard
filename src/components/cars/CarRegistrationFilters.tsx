@@ -60,8 +60,8 @@ export default function CarRegistrationFilters({
 
   const handleClearFilters = () => {
     setSearchInput("");
-    onParamsChange({ 
-      page: 1, 
+    onParamsChange({
+      page: 1,
       limit: params.limit ?? 10,
       sortBy: "createdAt",
       sortOrder: "desc",
@@ -69,9 +69,10 @@ export default function CarRegistrationFilters({
   };
 
   const hasActiveFilters = !!(
-    searchInput || 
-    params.isApproved !== undefined || 
-    (params.sortBy !== "createdAt" || params.sortOrder !== "desc")
+    searchInput ||
+    params.isApproved !== undefined ||
+    params.sortBy !== "createdAt" ||
+    params.sortOrder !== "desc"
   );
 
   return (
@@ -96,30 +97,6 @@ export default function CarRegistrationFilters({
             </button>
           )}
         </div>
-
-        {/* Status Filter */}
-        <Select
-          value={
-            params.isApproved !== undefined
-              ? params.isApproved.toString()
-              : "all"
-          }
-          onValueChange={(value) => {
-            if (value === "all") handleFilterChange(null);
-            else if (value === "true") handleFilterChange(true);
-            else handleFilterChange(false);
-          }}
-          disabled={isLoading}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Filter by status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            <SelectItem value="true">Approved</SelectItem>
-            <SelectItem value="false">Pending</SelectItem>
-          </SelectContent>
-        </Select>
 
         {/* Sort */}
         <Select

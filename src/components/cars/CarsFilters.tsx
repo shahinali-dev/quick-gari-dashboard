@@ -60,8 +60,8 @@ export default function CarsFilters({
 
   const handleClearFilters = () => {
     setSearchInput("");
-    onParamsChange({ 
-      page: 1, 
+    onParamsChange({
+      page: 1,
       limit: params.limit ?? 10,
       sortBy: "createdAt",
       sortOrder: "desc",
@@ -69,9 +69,10 @@ export default function CarsFilters({
   };
 
   const hasActiveFilters = !!(
-    searchInput || 
-    params.isApproved !== undefined || 
-    (params.sortBy !== "createdAt" || params.sortOrder !== "desc")
+    searchInput ||
+    params.isApproved !== undefined ||
+    params.sortBy !== "createdAt" ||
+    params.sortOrder !== "desc"
   );
 
   return (

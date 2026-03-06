@@ -1,6 +1,6 @@
-import PaginationComponent from "@/components/common/Pagination";
 import CarRegistrationFilters from "@/components/cars/CarRegistrationFilters";
 import CarRegistrationTable from "@/components/cars/CarRegistrationTable";
+import PaginationComponent from "@/components/common/Pagination";
 import {
   useApproveCarRegistrationRequest,
   useGetAllCarRegistrationRequest,

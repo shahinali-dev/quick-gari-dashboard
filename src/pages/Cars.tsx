@@ -1,12 +1,9 @@
-import { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  useGetAllCars,
-  type GetAllCarsParams,
-} from "@/hooks";
-import PaginationComponent from "@/components/common/Pagination";
 import CarsFilters from "@/components/cars/CarsFilters";
 import CarsTable from "@/components/cars/CarsTable";
+import PaginationComponent from "@/components/common/Pagination";
+import { useGetAllCars, type GetAllCarsParams } from "@/hooks";
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Cars() {
   const navigate = useNavigate();
