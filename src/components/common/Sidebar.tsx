@@ -25,6 +25,18 @@ import NavItem from "./NavItem";
 const mainMenu: MenuItem[] = [
   { name: "Dashboard", icon: LayoutDashboard, path: "/", badge: null },
   { name: "Users", icon: Users, path: "/users", badge: null },
+  {
+    name: "Car Registration",
+    icon: Car,
+    path: "/car-registration",
+    badge: null,
+  },
+  {
+    name: "Cars",
+    icon: Car,
+    path: "/cars",
+    badge: null,
+  },
   { name: "Rides", icon: Car, path: "/rides", badge: "12" },
   { name: "Earnings", icon: Wallet, path: "/earnings", badge: null },
   { name: "Analytics", icon: BarChart3, path: "/analytics", badge: null },
@@ -120,7 +132,11 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
               <AvatarImage src="https://github.com/shadcn.png" />
               <AvatarFallback className="bg-amber-500 text-gray-950 text-xs font-bold">
                 {user?.name
-                  ? user.name.split(" ").map((n) => n[0]).join("").toUpperCase()
+                  ? user.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .toUpperCase()
                   : "US"}
               </AvatarFallback>
             </Avatar>

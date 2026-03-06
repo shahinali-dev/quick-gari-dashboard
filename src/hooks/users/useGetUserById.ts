@@ -15,9 +15,7 @@ export function useGetUserById(userId: string | null | undefined) {
     queryFn: async () => {
       if (!userId) return null;
 
-      const response = await api.get<UserResponse>(
-        `/api/v1/user/${userId}`,
-      );
+      const response = await api.get<UserResponse>(`/api/v1/user/${userId}`);
 
       return response.data.data;
     },
