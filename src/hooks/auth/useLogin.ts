@@ -33,6 +33,7 @@ interface LoginResponse {
 export function useLogin() {
   const { setUser } = useAuth();
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
+  console.log("API URL:", apiUrl);
 
   return useMutation({
     mutationFn: async (credentials: LoginRequest) => {
