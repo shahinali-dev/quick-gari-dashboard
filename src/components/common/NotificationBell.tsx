@@ -19,6 +19,9 @@ export default function NotificationBell() {
     }
   };
 
+  const displayedNotifications = notifications.slice(0, 5);
+  const hasMore = notifications.length > 5;
+
   return (
     <div className="relative">
       {/* Bell Button */}
@@ -31,7 +34,7 @@ export default function NotificationBell() {
       >
         <Bell size={20} />
         {unreadCount > 0 && (
-          <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+          <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
             {unreadCount > 9 ? "9+" : unreadCount}
           </span>
         )}
@@ -59,7 +62,7 @@ export default function NotificationBell() {
                 <p>No notifications yet</p>
               </div>
             ) : (
-              notifications.map((notification) => (
+              displayedNotifications.map((notification) => (
                 <button
                   key={notification.id}
                   onClick={() => handleNotificationClick(notification)}
@@ -72,7 +75,7 @@ export default function NotificationBell() {
                       <h4 className="font-semibold text-gray-900 text-sm">
                         {notification.title}
                       </h4>
-                      <p className="text-sm text-gray-600 mt-1">
+                      <p className="text-sm text-gray-600 mt-1 line-clamp-2">
                         {notification.message}
                       </p>
                       <span className="text-xs text-gray-400 mt-2 block">
@@ -88,14 +91,28 @@ export default function NotificationBell() {
             )}
           </div>
 
-          {/* Footer */}
+          {/* Footer with View All and Clear */}
           {notifications.length > 0 && (
-            <div className="p-3 border-t border-gray-200 text-center">
+            <div className="p-3 border-t border-gray-200 flex gap-2 justify-between">
+              {hasMore && (
+                <button
+                  onClick={() => {
+                    navigate("/notifications");
+                    setIsOpen(false);
+                  }}
+                  className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  View all ({notifications.length})
+                </button>
+              )}
               <button
-                onClick={clearNotifications}
-                className="text-sm text-gray-500 hover:text-gray-700"
+                onClick={() => {
+                  clearNotifications();
+                  setIsOpen(false);
+                }}
+                className="text-sm text-gray-500 hover:text-gray-700 ml-auto"
               >
-                Clear All
+                Clear all
               </button>
             </div>
           )}

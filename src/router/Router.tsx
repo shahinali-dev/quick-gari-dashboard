@@ -6,6 +6,7 @@ import CarRegistrationDetail from "@/pages/CarRegistrationDetail";
 import Cars from "@/pages/Cars";
 import Dashboard from "@/pages/Dashboard";
 import Login from "@/pages/Login";
+import Notifications from "@/pages/Notifications";
 import Rides from "@/pages/Rides";
 import UserDetail from "@/pages/UserDetail";
 import Users from "@/pages/Users";
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "/car-registration/:requestId",
         element: <CarRegistrationDetail />,
+      },
+      {
+        path: "/notifications",
+        element: <Notifications />,
       },
     ],
   },

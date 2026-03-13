@@ -16,5 +16,6 @@ export type {
   VehicleRegistration,
 } from "./car";
 export { useDebounce } from "./useDebounce";
+export { useNotificationsFetch } from "./useNotificationsFetch";
 export { useGetUserById, useGetUsers } from "./users";
 export type { GetUsersParams, User, UsersResponse } from "./users";

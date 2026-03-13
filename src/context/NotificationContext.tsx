@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { api } from "@/lib/api";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
@@ -10,6 +12,7 @@ export type NotificationType =
   | "OTHER";
 
 export interface AppNotification {
+  _id?: string;
   id: string;
   type: NotificationType;
   title: string;
@@ -27,8 +30,10 @@ interface NotificationContextType {
     notification: Omit<AppNotification, "id" | "timestamp" | "read">,
   ) => void;
   markAsRead: (id: string) => void;
+  markAllAsRead: () => Promise<void>;
   clearNotifications: () => void;
   isConnected: boolean;
+  isLoading: boolean;
 }
 
 // type অনুযায়ী title map
@@ -71,6 +76,7 @@ export function NotificationProvider({
 }) {
   const [notifications, setNotifications] = useState<AppNotification[]>([]);
   const [isConnected, setIsConnected] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // addNotification কে useEffect এর বাইরে রাখো — stable reference দরকার
   const addNotification = (
@@ -85,6 +91,37 @@ export function NotificationProvider({
     setNotifications((prev) => [newNotification, ...prev].slice(0, 50));
   };
 
+  const markAsRead = (id: string) => {
+    setNotifications((prev) =>
+      prev.map((n) => {
+        if (n.id === id || n._id === id) {
+          // Optimistically update UI
+          if (n._id) {
+            api
+              .patch(`/api/v1/notifications/mark-as-read/${n._id}`)
+              .catch((error) => {
+                console.error("Failed to mark as read:", error);
+              });
+          }
+          return { ...n, read: true };
+        }
+        return n;
+      }),
+    );
+  };
+
+  const markAllAsRead = async () => {
+    try {
+      await api.patch("/api/v1/notifications/mark-all-as-read");
+      setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+    } catch (error) {
+      console.error("Failed to mark all as read:", error);
+    }
+  };
+
+  const clearNotifications = () => setNotifications([]);
+
+  // Initialize socket only - NO automatic API fetch
   useEffect(() => {
     const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
     const socketUrl = apiUrl.replace("/api", "");
@@ -100,6 +137,7 @@ export function NotificationProvider({
     socket.on("connect", () => {
       console.log("✅ Connected to notification server");
       setIsConnected(true);
+      setIsLoading(false);
 
       const userStr = localStorage.getItem("user");
       if (userStr) {
@@ -132,22 +170,14 @@ export function NotificationProvider({
         title: NOTIFICATION_TITLES[type] || "Notification",
         message: data.message,
         data: data,
-        actionUrl: getActionUrl(type, data.refs),
+        actionUrl: getActionUrl(type, data.refs || data.metadata?.refs),
       });
     });
 
     return () => {
       socket.disconnect();
     };
-  }, []); // ✅ addNotification টা stable তাই dependency লাগবে না
-
-  const markAsRead = (id: string) => {
-    setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, read: true } : n)),
-    );
-  };
-
-  const clearNotifications = () => setNotifications([]);
+  }, []);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
@@ -158,8 +188,10 @@ export function NotificationProvider({
         unreadCount,
         addNotification,
         markAsRead,
+        markAllAsRead,
         clearNotifications,
         isConnected,
+        isLoading,
       }}
     >
       {children}

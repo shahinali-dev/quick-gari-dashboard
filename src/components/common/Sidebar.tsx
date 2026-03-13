@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useNotifications } from "@/context/NotificationContext";
 import { useAuth } from "@/hooks/auth";
 import { cn } from "@/lib/utils";
 import {
@@ -33,10 +34,6 @@ const mainMenu: MenuItem[] = [
   },
 ];
 
-const secondaryMenu: MenuItem[] = [
-  { name: "Notifications", icon: Bell, path: "/notifications", badge: "3" },
-];
-
 interface SidebarProps {
   collapsed: boolean;
   setCollapsed: (val: boolean) => void;
@@ -44,6 +41,18 @@ interface SidebarProps {
 
 export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
   const { user, logout } = useAuth();
+  const { unreadCount } = useNotifications();
+
+  // Dynamic secondary menu with unread count
+  const secondaryMenu: MenuItem[] = [
+    {
+      name: "Notifications",
+      icon: Bell,
+      path: "/notifications",
+      badge:
+        unreadCount > 0 ? String(unreadCount > 9 ? "9+" : unreadCount) : null,
+    },
+  ];
   return (
     <TooltipProvider delayDuration={0}>
       <aside
