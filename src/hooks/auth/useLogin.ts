@@ -12,19 +12,19 @@ interface LoginResponse {
   statusCode: number;
   message: string;
   data: {
-    _id: string;
-    name: string;
-    email: string;
-    role: "admin" | "car_owner";
-    phoneNumber?: string;
-    gender?: string;
-    isCarOwner?: boolean;
-    isVerified?: boolean;
-    avatar?: string;
-    createdAt?: string;
-    updatedAt?: string;
-  };
-  token: {
+    user: {
+      _id: string;
+      name: string;
+      email: string;
+      role: "admin" | "car_owner";
+      phoneNumber?: string;
+      gender?: string;
+      isCarOwner?: boolean;
+      isVerified?: boolean;
+      avatar?: string | null;
+      createdAt?: string;
+      updatedAt?: string;
+    };
     accessToken: string;
     refreshToken: string;
   };
@@ -33,7 +33,6 @@ interface LoginResponse {
 export function useLogin() {
   const { setUser } = useAuth();
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
-  console.log("API URL:", apiUrl);
 
   return useMutation({
     mutationFn: async (credentials: LoginRequest) => {
@@ -44,27 +43,22 @@ export function useLogin() {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log("Login successful:", data);
-
-      // Map API response to user format
       const userData = {
-        _id: data.data._id,
-        id: data.data._id,
-        email: data.data.email,
-        name: data.data.name,
-        role: data.data.role,
-        avatar: data.data.avatar,
+        _id: data.data.user._id,
+        id: data.data.user._id,
+        email: data.data.user.email,
+        name: data.data.user.name,
+        role: data.data.user.role,
+        avatar: data.data.user.avatar ?? undefined, // null → undefined
       };
 
-      const accessToken = data.token.accessToken;
-      const refreshToken = data.token.refreshToken;
+      const accessToken = data.data.accessToken;
+      const refreshToken = data.data.refreshToken;
 
-      // Save to localStorage
       localStorage.setItem("user", JSON.stringify(userData));
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
 
-      // Update auth context
       setUser(userData);
     },
   });
