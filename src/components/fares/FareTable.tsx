@@ -10,7 +10,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { ShareVehicleFare } from "@/hooks/useShareVehicleFare";
+import type { ShareVehicleFare } from "@/hooks/shareVehicleFare/useShareVehicleFare";
+
 import { Pencil, Trash2 } from "lucide-react";
 
 interface FareTableProps {

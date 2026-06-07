@@ -17,7 +17,9 @@ import {
   useDeleteFare,
   useGetAllFares,
   useUpdateFare,
+  type FarePayload,
   type GetShareVehicleFareParams,
+  type ShareVehicleFare,
 } from "@/hooks/shareVehicleFare/useShareVehicleFare";
 
 import { Plus, Search, X } from "lucide-react";

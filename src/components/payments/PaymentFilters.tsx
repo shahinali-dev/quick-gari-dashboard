@@ -9,7 +9,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useDebounce } from "@/hooks";
-import type { GetPendingPaymentsParams } from "@/hooks/usePayments";
+import type { GetPendingPaymentsParams } from "@/hooks/payments/usePayments";
+
 import { Search, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 

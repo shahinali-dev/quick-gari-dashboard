@@ -12,7 +12,8 @@ import { Label } from "@/components/ui/label";
 import type {
   FarePayload,
   ShareVehicleFare,
-} from "@/hooks/useShareVehicleFare";
+} from "@/hooks/shareVehicleFare/useShareVehicleFare";
+
 import { useEffect, useState } from "react";
 
 interface FareFormModalProps {

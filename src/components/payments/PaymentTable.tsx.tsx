@@ -10,7 +10,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { PendingPayment } from "@/hooks/usePayments";
+import type { PendingPayment } from "@/hooks/payments/usePayments";
+
 import { Check, Eye, X } from "lucide-react";
 
 interface PaymentTableProps {
