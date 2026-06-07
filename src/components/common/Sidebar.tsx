@@ -38,6 +38,12 @@ const mainMenu: MenuItem[] = [
     path: "/payments",
     badge: null,
   },
+  {
+    name: "Share vehice Fare",
+    icon: Car,
+    path: "/share-vehicle-fares",
+    badge: null,
+  },
 ];
 
 interface SidebarProps {

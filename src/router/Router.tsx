@@ -10,6 +10,7 @@ import Notifications from "@/pages/Notifications";
 import PaymentDetail from "@/pages/PaymentDetail";
 import PaymentRequests from "@/pages/PaymentRequests";
 import Rides from "@/pages/Rides";
+import ShareVehicleFares from "@/pages/ShareVehicleFares";
 import UserDetail from "@/pages/UserDetail";
 import Users from "@/pages/Users";
 import { createBrowserRouter } from "react-router-dom";
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: "/payments/:paymentId",
         element: <PaymentDetail />,
+      },
+      {
+        path: "/share-vehicle-fares",
+        element: <ShareVehicleFares />,
       },
     ],
   },
