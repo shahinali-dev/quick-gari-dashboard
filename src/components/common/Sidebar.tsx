@@ -32,6 +32,12 @@ const mainMenu: MenuItem[] = [
     path: "/cars",
     badge: null,
   },
+  {
+    name: "Payments",
+    icon: Car,
+    path: "/payments",
+    badge: null,
+  },
 ];
 
 interface SidebarProps {

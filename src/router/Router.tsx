@@ -7,6 +7,8 @@ import Cars from "@/pages/Cars";
 import Dashboard from "@/pages/Dashboard";
 import Login from "@/pages/Login";
 import Notifications from "@/pages/Notifications";
+import PaymentDetail from "@/pages/PaymentDetail";
+import PaymentRequests from "@/pages/PaymentRequests";
 import Rides from "@/pages/Rides";
 import UserDetail from "@/pages/UserDetail";
 import Users from "@/pages/Users";
@@ -60,6 +62,14 @@ const router = createBrowserRouter([
       {
         path: "/notifications",
         element: <Notifications />,
+      },
+      {
+        path: "/payments",
+        element: <PaymentRequests />,
+      },
+      {
+        path: "/payments/:paymentId",
+        element: <PaymentDetail />,
       },
     ],
   },
