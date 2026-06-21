@@ -5,6 +5,7 @@ import CarRegistration from "@/pages/CarRegistration";
 import CarRegistrationDetail from "@/pages/CarRegistrationDetail";
 import Cars from "@/pages/Cars";
 import Dashboard from "@/pages/Dashboard";
+import DriverPayouts from "@/pages/DriverPayouts";
 import Login from "@/pages/Login";
 import Notifications from "@/pages/Notifications";
 import PaymentDetail from "@/pages/PaymentDetail";
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: "/share-vehicle-fares",
         element: <ShareVehicleFares />,
+      },
+      {
+        path: "/driver-payout",
+        element: <DriverPayouts />,
       },
     ],
   },
