@@ -5,6 +5,8 @@ import CarRegistration from "@/pages/CarRegistration";
 import CarRegistrationDetail from "@/pages/CarRegistrationDetail";
 import Cars from "@/pages/Cars";
 import Dashboard from "@/pages/Dashboard";
+import DriverPayoutHistory from "@/pages/DriverPayoutHistory";
+import DriverPayoutHistoryDetail from "@/pages/DriverPayoutHistoryDetail";
 import DriverPayouts from "@/pages/DriverPayouts";
 import Login from "@/pages/Login";
 import Notifications from "@/pages/Notifications";
@@ -80,6 +82,14 @@ const router = createBrowserRouter([
       {
         path: "/driver-payout",
         element: <DriverPayouts />,
+      },
+      {
+        path: "/driver-payout-history",
+        element: <DriverPayoutHistory />,
+      },
+      {
+        path: "/driver-payout-history/:id",
+        element: <DriverPayoutHistoryDetail />,
       },
     ],
   },

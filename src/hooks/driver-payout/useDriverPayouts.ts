@@ -88,6 +88,24 @@ export interface GetDriverPayoutsParams {
   sortOrder?: "asc" | "desc";
 }
 
+export interface CompletedDriverPayoutsResponse {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: {
+    result: {
+      rides: DriverPayout[];
+      returns: DriverPayout[];
+      shareVehicleBookings: DriverPayout[];
+    };
+    meta: {
+      rides: MetaInfo;
+      returns: MetaInfo;
+      shareVehicleBookings: MetaInfo;
+    };
+  };
+}
+
 // ─── Hooks ────────────────────────────────────────────────────────
 
 export function useGetPendingDriverPayouts(
@@ -128,5 +146,27 @@ export function useCompleteDriverPayout() {
     onError: () => {
       toast.error("Failed to complete driver payout");
     },
+  });
+}
+
+export function useGetCompletedDriverPayouts(
+  params: GetDriverPayoutsParams = {},
+) {
+  return useQuery({
+    queryKey: ["driver-payouts-history", params],
+    queryFn: async () => {
+      const queryParams = new URLSearchParams();
+      if (params.page) queryParams.append("page", params.page.toString());
+      if (params.limit) queryParams.append("limit", params.limit.toString());
+      if (params.search) queryParams.append("search", params.search);
+      if (params.sortBy) queryParams.append("sortBy", params.sortBy);
+      if (params.sortOrder) queryParams.append("sortOrder", params.sortOrder);
+
+      const response = await api.get<CompletedDriverPayoutsResponse>(
+        `/api/v1/driver-payout/history?${queryParams.toString()}`,
+      );
+      return response.data;
+    },
+    staleTime: 1000 * 60 * 5, // history বেশিক্ষণ cache রাখা যায়, 5 min
   });
 }

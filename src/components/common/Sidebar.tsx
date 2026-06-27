@@ -50,6 +50,12 @@ const mainMenu: MenuItem[] = [
     path: "/driver-payout",
     badge: null,
   },
+  {
+    name: "Driver Payout History",
+    icon: Car,
+    path: "/driver-payout-history",
+    badge: null,
+  },
 ];
 
 interface SidebarProps {
