@@ -14,9 +14,11 @@ export default function Header() {
     navigate("/login");
   };
 
-  const getInitials = (name: string) => {
+  const getInitials = (name?: string | null) => {
+    if (!name) return "AD";
     return name
       .split(" ")
+      .filter(Boolean)
       .map((n) => n[0])
       .join("")
       .toUpperCase();
@@ -34,7 +36,7 @@ export default function Header() {
       <Avatar className="h-8 w-8">
         <AvatarImage src={user?.avatar} />
         <AvatarFallback className="bg-amber-500 text-gray-950 text-xs font-bold">
-          {user ? getInitials(user.name) : "AD"}
+          {getInitials(user?.name)}
         </AvatarFallback>
       </Avatar>
       <Button
